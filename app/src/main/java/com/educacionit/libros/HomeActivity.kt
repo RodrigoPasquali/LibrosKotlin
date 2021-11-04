@@ -21,10 +21,9 @@ class HomeActivity : AppCompatActivity() {
     private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         result ->
             if (result.resultCode == RESULT_OK) {
-                //as --> para castear
-                val nuevoLibro = result.data?.getSerializableExtra(LIBRO) as? Libro
-                //let --> si no es nulo, agrega libro
-                nuevoLibro?.let { agregarNuevoLibroAdapter(it) }
+                //?:(expresion elvis) --> si no es nulo, toma el extra, si es nulo el false
+                val libroAgregado = result.data?.getBooleanExtra(LIBRO, false) ?: false
+                if (libroAgregado) refrescarLibros()
             }
     }
 
@@ -35,6 +34,7 @@ class HomeActivity : AppCompatActivity() {
         setupToolbar()
         saludarUsuario()
         setupAdapter()
+        refrescarLibros()
     }
 
     private fun setupToolbar() {
@@ -66,21 +66,10 @@ class HomeActivity : AppCompatActivity() {
     private fun setupAdapter() {
         rvLibros = findViewById(R.id.rvLibros)
         rvLibros.adapter = adapter
-        adapter.libros = getLibros()
     }
 
-    private fun getLibros(): List<Libro> {
-        return listOf(
-            Libro(1, "Harry Potter", "J.K. Rowling"),
-            Libro(2, "Game of Thrones", "George Martin"),
-            Libro(3, "Maze Runner", "James Dashner")
-        )
-    }
-
-    private fun agregarNuevoLibroAdapter(nuevoLibro: Libro) {
-        var libros = LinkedList(adapter.libros)
-        libros.add(nuevoLibro)
-        adapter.libros = libros
+    private fun refrescarLibros() {
+        adapter.libros = LibrosRepository(this).getLibros()
     }
 
     private fun saludarUsuario() {

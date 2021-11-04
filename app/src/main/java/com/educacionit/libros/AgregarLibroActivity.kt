@@ -30,7 +30,8 @@ class AgregarLibroActivity : AppCompatActivity() {
             val libro = Libro()
             libro.nombre = etNombreLibro.text.toString()
             libro.autor = etAutor.text.toString()
-            setResult(RESULT_OK, Intent().putExtra(HomeActivity.LIBRO, libro))
+            guardarLibro(libro)
+            setResult(RESULT_OK, Intent().putExtra(HomeActivity.LIBRO, true))
             finish()
         } else {
             Toast.makeText(
@@ -39,6 +40,10 @@ class AgregarLibroActivity : AppCompatActivity() {
                 Toast.LENGTH_SHORT
             ).show()
         }
+    }
+
+    private fun guardarLibro(libro: Libro) {
+        LibrosRepository(this).agregarLibro(libro)
     }
 
     private fun datosValidos(): Boolean {
