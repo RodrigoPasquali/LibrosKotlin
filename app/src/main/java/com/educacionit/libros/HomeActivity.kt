@@ -12,19 +12,20 @@ import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
 class HomeActivity : AppCompatActivity() {
-
     private lateinit var toolbar: Toolbar
     private lateinit var rvLibros: RecyclerView
     private var adapter: LibrosAdapter = LibrosAdapter {
         Toast.makeText(this@HomeActivity, it.nombre, Toast.LENGTH_SHORT).show()
     }
-    private val startForResult = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == RESULT_OK) {
-            val nuevoLibro = result.data?.getSerializableExtra(LIBRO) as? Libro
-            nuevoLibro?.let { agregarNuevoLibroAdapter(it) }
-        }
+
+    private val startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        result ->
+            if (result.resultCode == RESULT_OK) {
+                //as --> para castear
+                val nuevoLibro = result.data?.getSerializableExtra(LIBRO) as? Libro
+                //let --> si no es nulo, agrega libro
+                nuevoLibro?.let { agregarNuevoLibroAdapter(it) }
+            }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +45,7 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_home, menu)
+
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -51,6 +53,7 @@ class HomeActivity : AppCompatActivity() {
         if (item.itemId == R.id.item_agregar) {
             goToAgregarLibro()
         }
+
         return super.onOptionsItemSelected(item)
     }
 
@@ -88,6 +91,8 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    //lo que esta dentro de companiion object puede ser llamado como su fuera statico(se puede acceder
+    // sin necesidad de instanciar la clase
     companion object {
         const val LIBRO = "Libro"
     }

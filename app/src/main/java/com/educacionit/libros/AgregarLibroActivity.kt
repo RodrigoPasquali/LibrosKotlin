@@ -30,9 +30,7 @@ class AgregarLibroActivity : AppCompatActivity() {
             val libro = Libro()
             libro.nombre = etNombreLibro.text.toString()
             libro.autor = etAutor.text.toString()
-            setResult(
-                RESULT_OK, Intent().putExtra(HomeActivity.LIBRO, libro)
-            )
+            setResult(RESULT_OK, Intent().putExtra(HomeActivity.LIBRO, libro))
             finish()
         } else {
             Toast.makeText(
@@ -45,9 +43,11 @@ class AgregarLibroActivity : AppCompatActivity() {
 
     private fun datosValidos(): Boolean {
         var datosValidos = true
+
         if (etNombreLibro.text.toString().isEmpty() || etAutor.text.toString().isEmpty()) {
             datosValidos = false
         }
+
         return datosValidos
     }
 }
