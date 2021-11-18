@@ -8,13 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.squareup.picasso.Picasso
 
 class AgregarLibroFragment : Fragment() {
     private lateinit var etNombreLibro: EditText
     private lateinit var etAutor: EditText
     private lateinit var btnGuardar: Button
+    private lateinit var imgLibro: ImageView
+    private var urlImagen = "https://cdn.pixabay.com/photo/2018/01/03/09/09/book-3057904_1280.png"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,8 +34,12 @@ class AgregarLibroFragment : Fragment() {
     private fun setupUI(view: View) {
         etNombreLibro = view.findViewById(R.id.etNombreLibro)
         etAutor = view.findViewById(R.id.etAutor)
+        imgLibro = view.findViewById(R.id.imagenLibro)
         btnGuardar = view.findViewById(R.id.btnGuardar)
+
         btnGuardar.setOnClickListener { guardarLibro() }
+
+        descargarImagen(urlImagen)
     }
 
     private fun guardarLibro() {
@@ -63,5 +71,10 @@ class AgregarLibroFragment : Fragment() {
         }
 
         return datosValidos
+    }
+
+    private fun descargarImagen(url : String) {
+        Picasso.get().isLoggingEnabled = true
+        Picasso.get().load(url).error(R.drawable.splash_screen).into(imgLibro)
     }
 }

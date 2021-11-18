@@ -15,6 +15,13 @@
         android:text="Agregar Libro"
         android:textSize="24sp" />
 
+    <ImageView
+        android:id="@+id/imagenLibro"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:layout_margin="40dp"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
