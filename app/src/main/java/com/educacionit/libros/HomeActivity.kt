@@ -8,7 +8,11 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.*
 
 class HomeActivity : AppCompatActivity() {
@@ -69,7 +73,12 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun refrescarLibros() {
-        adapter.libros = LibrosRepository(this).getLibros()
+        lifecycleScope.launch(Dispatchers.IO){
+            val libros = LibrosRepository(this@HomeActivity).getLibros()
+            withContext(Dispatchers.Main) {
+                adapter.libros = libros;
+            }
+        }
     }
 
     private fun saludarUsuario() {
