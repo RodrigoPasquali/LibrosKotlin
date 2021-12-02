@@ -1,5 +1,6 @@
 package com.educacionit.libros
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,14 +12,24 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.educacionit.notificaciones.NotificacionIntent
 import com.squareup.picasso.Picasso
 
 class AgregarLibroFragment : Fragment() {
+    private lateinit var notificacion : NotificacionIntent
     private lateinit var etNombreLibro: EditText
     private lateinit var etAutor: EditText
     private lateinit var btnGuardar: Button
     private lateinit var imgLibro: ImageView
     private var urlImagen = "https://cdn.pixabay.com/photo/2018/01/03/09/09/book-3057904_1280.png"
+    private lateinit var appContext : Context
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setUpNotifications()
+        appContext = requireContext().applicationContext
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +53,10 @@ class AgregarLibroFragment : Fragment() {
         descargarImagen(urlImagen)
     }
 
+    private fun setUpNotifications() {
+        notificacion = NotificacionIntent()
+    }
+
     private fun guardarLibro() {
         if (datosValidos()) {
             val libro = Libro()
@@ -50,6 +65,8 @@ class AgregarLibroFragment : Fragment() {
             guardarLibro(libro)
             requireActivity().setResult(AppCompatActivity.RESULT_OK, Intent().putExtra(HomeActivity.LIBRO, true))
             requireActivity().finish()
+
+            notificacion.lanzarNotificacion(appContext, "Libro agregado", "Se agrego el libro ${libro.nombre}")
         } else {
             Toast.makeText(
                 requireContext(),
