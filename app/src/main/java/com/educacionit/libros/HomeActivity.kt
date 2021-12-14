@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
+import com.educacionit.service.SyncService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -39,6 +40,7 @@ class HomeActivity : AppCompatActivity() {
         saludarUsuario()
         setupAdapter()
         refrescarLibros()
+        initializeSyncService()
     }
 
     private fun setupToolbar() {
@@ -95,6 +97,16 @@ class HomeActivity : AppCompatActivity() {
             val usuario = bundle.getString("USUARIO")
             Toast.makeText(this@HomeActivity, "Bienvenido $usuario", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun initializeSyncService() {
+        val intent = Intent(this, SyncService::class.java)
+        startService(intent)
+    }
+
+    override fun onDestroy() {
+        stopService(Intent(this, SyncService::class.java))
+        super.onDestroy()
     }
 
     //lo que esta dentro de companiion object puede ser llamado como su fuera statico(se puede acceder
