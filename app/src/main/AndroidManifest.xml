@@ -28,7 +28,7 @@
         </activity>
 
         <service
-            android:name=".SyncService"
+            android:name="com.educacionit.service.SyncService"
             android:exported="false" />
     </application>
 
