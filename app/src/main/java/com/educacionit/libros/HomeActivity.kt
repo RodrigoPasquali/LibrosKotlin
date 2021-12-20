@@ -60,6 +60,8 @@ class HomeActivity : AppCompatActivity() {
             goToAgregarLibro()
         } else if (item.itemId == R.id.item_favoritos) {
             goToLibrosFavoritos()
+        } else if (item.itemId == R.id.item_about_me) {
+            goToAboutMe()
         }
 
         return super.onOptionsItemSelected(item)
@@ -107,6 +109,10 @@ class HomeActivity : AppCompatActivity() {
     override fun onDestroy() {
         stopService(Intent(this, SyncService::class.java))
         super.onDestroy()
+    }
+
+    private fun goToAboutMe() {
+        startActivity(Intent(this, AboutMeActivity::class.java))
     }
 
     //lo que esta dentro de companiion object puede ser llamado como su fuera statico(se puede acceder
