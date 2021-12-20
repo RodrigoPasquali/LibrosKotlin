@@ -5,4 +5,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="about_me_text">Aplicación que permite tener un registro de libros conteniendo el nombre del mismo y el autor.</string>
     <string name="logo_about_me">Imagen libro</string>
+    <string name="author">Autor</string>
+    <string name="book">Libro</string>
 </resources>
