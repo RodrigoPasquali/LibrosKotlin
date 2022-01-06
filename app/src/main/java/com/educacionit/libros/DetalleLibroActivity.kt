@@ -11,7 +11,8 @@ class DetalleLibroActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detalle_libro)
+//        setContentView(R.layout.activity_detalle_libro)
+        setContentView(R.layout.activity_detalle_libro_toolbar_colapsable)
 
         libro = intent.getSerializableExtra(HomeActivity.LIBRO) as Libro
 
